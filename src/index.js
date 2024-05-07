@@ -1,7 +1,39 @@
 const app = require("./app");
 
+const prisma = require("../prisma/client");
 const port = 3000;
 
-app.listen(port, () => {
-  console.log(`server is running on port ${port}`);
+let server;
+
+if (prisma) {
+  console.log("Connected to database");
+  server = app.listen(port, () => {
+    console.log(`Listening to port ${port}`);
+  });
+}
+
+const exitHandler = () => {
+  if (server) {
+    server.close(() => {
+      console.log("Server closed");
+      process.exit(1);
+    });
+  } else {
+    process.exit(1);
+  }
+};
+
+const unexpectedErrorHandler = (error) => {
+  console.log(error);
+  exitHandler();
+};
+
+process.on("uncaughtException", unexpectedErrorHandler);
+process.on("unhandledRejection", unexpectedErrorHandler);
+
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received");
+  if (server) {
+    server.close();
+  }
 });

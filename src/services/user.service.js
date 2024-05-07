@@ -5,13 +5,18 @@ const createUser = async (payload) => {
 
   const user = await prisma.user.create({
     data: {
-      name, email, phone
-    }
+      name,
+      email,
+      phone,
+    },
   });
 
   return user;
-}
+};
 
-const getAllUser = async() =>  allUser = await prisma.user.findMany();
+const getAllUser = async () => {
+  const allUser = await prisma.user.findMany();
+  return allUser;
+};
 
-module.exports = { createUser, getAllUser }
+module.exports = { createUser, getAllUser };
