@@ -28,7 +28,7 @@ model Todo {
   title       String
   description String
   status      String   @default("Todo")
-  User        User     @relation(fields: [userId], references: [id])
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

@@ -18,6 +18,9 @@ const getUserById = async (userId) => {
     where: {
       id: userId,
     },
+    include: {
+      todos: true
+    }
   });
 
   if (!user) {
