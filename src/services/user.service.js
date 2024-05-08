@@ -1,14 +1,8 @@
 const prisma = require("../../prisma/client");
 
 const createUser = async (payload) => {
-  const { name, email, phone } = payload;
-
   const user = await prisma.user.create({
-    data: {
-      name,
-      email,
-      phone,
-    },
+    data: payload,
   });
 
   return user;
@@ -19,4 +13,29 @@ const getAllUser = async () => {
   return allUser;
 };
 
-module.exports = { createUser, getAllUser };
+const getUserById = async (userId) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    throw new Error(`User with id ${userId} not found`);
+  }
+
+  return user;
+};
+
+const updateUser = async (userId, payload) => {
+  const userUpdated = await prisma.user.update({
+    where: {
+      id: userId
+    },
+    data: payload
+  });
+
+  return userUpdated;
+};
+
+module.exports = { createUser, getAllUser, getUserById, updateUser };
