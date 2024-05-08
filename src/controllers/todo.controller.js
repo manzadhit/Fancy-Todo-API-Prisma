@@ -1,5 +1,5 @@
 const httpStatus = require("http-status");
-const { createTodo, getAllTodo } = require("../services/todo.service");
+const { createTodo, getAllTodo, updateTodo, getTodoById, deleteTodo } = require("../services/todo.service");
 
 const createTodoController = async (req, res) => {
   try {
@@ -36,7 +36,66 @@ const getAllTodoController = async (req, res) => {
   }
 };
 
+const getTodoByIdController = async (req, res) => {
+  try {
+    const { todoId } = req.params;
+    const todo = await getTodoById(todoId);
+
+    res.status(httpStatus.OK).send({
+      status: httpStatus.OK,
+      message: "Successfully get todo by id",
+      data: todo,
+    });
+  } catch (error) {
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: error.message,
+    });
+  }
+};
+
+const updateTodoController = async (req, res) => {
+  try {
+    const { todoId } = req.params;
+    const payload = req.body;
+    await getTodoById(todoId);
+    const todoUpdated = await updateTodo(todoId, payload);
+
+    res.status(httpStatus.OK).send({
+      status: httpStatus.OK,
+      message: "Successfully update todo",
+      data: todoUpdated,
+    });
+  } catch (error) {
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: error.message,
+    });
+  }
+};
+
+const deleteTodoController = async (req, res) => {
+  try {
+    const { todoId } = req.params;
+    await getTodoById(todoId);
+    await deleteTodo(todoId);
+
+    res.status(httpStatus.OK).send({
+      status: httpStatus.OK,
+      message: "Successfully delete todo",
+    });
+  } catch (error) {
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createTodoController,
-  getAllTodoController
-}
+  getAllTodoController,
+  getTodoByIdController,
+  updateTodoController,
+  deleteTodoController
+};
