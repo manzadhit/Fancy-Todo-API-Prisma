@@ -1,5 +1,11 @@
 const httpStatus = require("http-status");
-const { createUser, getAllUser, getUserById, updateUser } = require("../services/user.service");
+const {
+  createUser,
+  getAllUser,
+  getUserById,
+  updateUser,
+  deleteUser,
+} = require("../services/user.service");
 
 const createUserController = async (req, res) => {
   try {
@@ -73,10 +79,28 @@ const updateUserController = async (req, res) => {
   }
 };
 
+const deleteUserController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    await getUserById(userId);
+    await deleteUser(userId);
+
+    res.status(httpStatus.OK).send({
+      status: httpStatus.OK,
+      message: "Successfully delete user"
+    })
+  } catch (error) {
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: error.message
+    })
+  }
+};
 
 module.exports = {
   createUserController,
   getAllUserController,
   getUserByIdController,
-  updateUserController
+  updateUserController,
+  deleteUserController
 };

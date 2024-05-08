@@ -38,4 +38,12 @@ const updateUser = async (userId, payload) => {
   return userUpdated;
 };
 
-module.exports = { createUser, getAllUser, getUserById, updateUser };
+const deleteUser = async (userId) => {
+  await prisma.user.delete({
+    where: {
+      id: userId
+    }
+  })
+} 
+
+module.exports = { createUser, getAllUser, getUserById, updateUser, deleteUser };
