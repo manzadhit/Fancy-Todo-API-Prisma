@@ -34,11 +34,13 @@ git clone https://github.com/manzadhit/Fancy-Todo-API-Prisma.git
 - [User](#user)
   - [Create User](#create-user)
 - [Todo](#todo)
+
 ### User
 
 #### Create User
 
 Membuat pengguna baru dengan memberikan nama pengguna, alamat email, dan nomor telepon.
+
 **URL**
 
 ```bash
@@ -71,5 +73,124 @@ POST /user
   }
 }
 ```
+
+#### Get All Users
+
+Mendapatkan daftar semua pengguna yang terdaftar.
+
+**URL**
+
+```bash
+GET /user
+```
+
+**Response Success**
+
+```json
+{
+  "status": 200,
+  "message": "Successfully retrieved users",
+  "data": [
+    {
+      "id": "8e3447de-8859-433d-98a6-b3c55109fb9f",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "123456789",
+      "createdAt": "2024-05-08T00:34:04.437Z",
+      "updatedAt": "2024-05-08T00:34:04.437Z"
+    },
+    {
+      "id": "f9b1e8d7-a2c5-4b6f-b7d5-f6a3c9b9b2c1",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "phone": null,
+      "createdAt": "2024-05-08T01:15:22.891Z",
+      "updatedAt": "2024-05-08T01:15:22.891Z"
+    }
+  ]
+}
+```
+
+#### Get User By ID
+
+Mendapatkan detail pengguna berdasarkan ID pengguna.
+
+**URL**
+
+```bash
+GET /user/:userId
+```
+
+**Response Success**
+
+```json
+{
+  "status": 200,
+  "message": "Successfully retrieved user",
+  "data": {
+    "id": "8e3447de-8859-433d-98a6-b3c55109fb9f",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phone": "123456789",
+    "createdAt": "2024-05-08T00:34:04.437Z",
+    "updatedAt": "2024-05-08T00:34:04.437Z"
+  }
+}
+```
+#### Update User
+
+Memperbarui data pengguna berdasarkan ID pengguna.
+
+**URL**
+
+```bash
+PATCH /user/:userId
+```
+
+**Body Request**
+```json
+{
+  "name": "John D. Doe",
+  "email": "johndoe123@gmail.com",
+  "phone": "987654321"
+}
+```
+
+**Response Success**
+
+```json
+{
+  "status": 200,
+  "message": "Successfully updated user",
+  "data": {
+    "id": "8e3447de-8859-433d-98a6-b3c55109fb9f",
+    "name": "John D. Doe",
+    "email": "johndoe123@gmail.com",
+    "phone": "987654321",
+    "createdAt": "2024-05-08T00:34:04.437Z",
+    "updatedAt": "2024-05-08T02:20:15.629Z"
+  }
+}
+```
+
+#### Delete User
+
+Menghapus pengguna berdasarkan ID pengguna.
+
+**URL**
+
+```bash
+DELETE /user/:userId
+```
+
+**Response Success**
+
+```json
+{
+  "status": 200,
+  "message": "Successfully deleted user"
+}
+```
+
 
 ### Todo
