@@ -13,6 +13,12 @@ Fancy Todo API adalah sebuah aplikasi API yang dibangun menggunakan Node.js, Exp
 - Prisma
 - MySQL
 
+## Database Schema
+
+![Database Schema](schema.png)
+
+Gambar di atas menunjukkan skema database yang digunakan dalam proyek ini.
+
 ## Instalasi
 
 1.  Kloning repositori ini ke dalam direktori lokal Anda.
